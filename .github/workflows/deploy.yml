@@ -26,9 +26,10 @@ jobs:
 
       - name: Inject GitHub Models token
         env:
-          GITHUB_MODELS_TOKEN: ${{ secrets.MODELS_TOKEN }}
+          MODELS_TOKEN: ${{ secrets.MODELS_TOKEN }}
         run: |
-          sed -i "s|__GITHUB_TOKEN_PLACEHOLDER__|${GITHUB_MODELS_TOKEN}|g" index.html
+          B64=$(printf '%s' "$MODELS_TOKEN" | base64 | tr -d '\n')
+          sed -i "s|__TOKEN_B64_PLACEHOLDER__|${B64}|g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

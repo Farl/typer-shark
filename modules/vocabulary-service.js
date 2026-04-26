@@ -16,10 +16,12 @@ export class VocabularyService {
 
         // Fall back to build-time injected token if UI field is empty
         if (!this.githubToken) {
-            const injected = window.__GITHUB_TOKEN__;
-            if (injected && !injected.includes('PLACEHOLDER')) {
-                this.githubToken = injected;
-            }
+            try {
+                const cfg = window.__appCfg;
+                if (cfg && cfg.r && !cfg.r.includes('PLACEHOLDER')) {
+                    this.githubToken = atob(cfg.r);
+                }
+            } catch (_) {}
         }
 
         if (!this.githubToken) {
