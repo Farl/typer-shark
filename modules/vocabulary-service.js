@@ -14,6 +14,14 @@ export class VocabularyService {
         this.currentTheme = theme; // Store the current theme for retries
         if (githubToken) this.githubToken = githubToken;
 
+        // Fall back to build-time injected token if UI field is empty
+        if (!this.githubToken) {
+            const injected = window.__GITHUB_TOKEN__;
+            if (injected && !injected.includes('PLACEHOLDER')) {
+                this.githubToken = injected;
+            }
+        }
+
         if (!this.githubToken) {
             throw new Error('GitHub token is required. Please enter your GitHub Personal Access Token.');
         }
