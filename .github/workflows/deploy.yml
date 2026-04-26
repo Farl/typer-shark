@@ -26,7 +26,7 @@ jobs:
 
       - name: Inject GitHub Models token
         env:
-          GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_MODELS_TOKEN }}
+          GITHUB_MODELS_TOKEN: ${{ secrets.MODELS_TOKEN }}
         run: |
           sed -i "s|__GITHUB_TOKEN_PLACEHOLDER__|${GITHUB_MODELS_TOKEN}|g" index.html
 
