@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typer Shark</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <div id="start-screen" class="screen">
+            <div class="start-content">
+                <h1>Typer Shark</h1>
+                <p>Choose a Theme to Train Your Typing Skills</p>
+                <input type="text" id="theme-input" placeholder="Enter a theme (e.g., space, animals, coding)">
+                <div class="token-section">
+                    <label for="github-token">GitHub Personal Access Token:</label>
+                    <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+                    <small>Required for AI word generation via <a href="https://github.com/marketplace/models" target="_blank" rel="noopener">GitHub Models</a>. 
+                    Get a token at <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">github.com/settings/tokens</a> (no special scopes needed).</small>
+                </div>
+                <div class="difficulty-section">
+                    <label for="starting-wpm">Starting WPM (Words Per Minute):</label>
+                    <input type="range" id="starting-wpm" min="10" max="50" value="15" step="5">
+                    <span id="wpm-display">15</span>
+                </div>
+                <button id="start-game-btn">Start Game</button>
+            </div>
+        </div>
+
+        <header id="game-header" class="hidden">
+            <div class="status-bar">
+                <div class="score-section">
+                    <span class="label">Score:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="lives-section">
+                    <span class="label">Lives:</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="wpm-section">
+                    <span class="label">WPM:</span>
+                    <span id="current-wpm">15</span>
+                </div>
+                <button id="quit-game-btn" class="quit-btn">Quit</button>
+            </div>
+        </header>
+        
+        <main id="game-container" class="hidden">
+            <div id="word-container"></div>
+            <input type="text" id="mobile-typing-input" aria-hidden="true" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </main>
+        
+        <div id="game-over-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <p>Your Final Score: <span id="final-score">0</span></p>
+                <div class="modal-actions">
+                    <button id="restart-btn">Play Again</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="ai-error-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Vocabulary Error</h2>
+                <p id="ai-error-message">Could not generate vocabulary for the chosen theme.</p>
+                <p>Please check your connection or try a different theme.</p>
+                <div class="modal-actions">
+                    <button id="retry-ai-btn">Retry</button>
+                    <button id="cancel-ai-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="toggle-debug-menu" class="debug-toggle-button">Vocabulary</button>
+
+        <div id="debug-vocabulary-menu" class="debug-menu">
+            <div class="debug-menu-header">
+                <h3></h3>
+            </div>
+            <div id="vocabulary-list" class="debug-list"></div>
+        </div>
+        
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "confetti": "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"
+        }
+    }
+    </script>
+    <script type="module" src="game.js"></script> 
+</body>
+</html>
